@@ -12,7 +12,7 @@
 2. **Get It Assigned** — Municipal administrators review reports and dispatch field teams based on geographic proximity.
 3. **Track the Cleanup** — Sanitation crews submit photographic proof of completed work, closing the audit trail.
 
-This repository represents **Phase 1: Project Foundation, Brand Identity & Premium UI Design System**.
+This repository covers **Phase 1: Frontend Design System & Landing Page** and **Phase 2: Backend Architecture & MongoDB Database Design**.
 
 ---
 
@@ -29,6 +29,8 @@ This repository represents **Phase 1: Project Foundation, Brand Identity & Premi
 ### Backend (`server/`)
 - **Node.js (v20+)** — Server runtime
 - **Express.js (v4)** — Fast, unopinionated HTTP web framework
+- **MongoDB Atlas** — Cloud NoSQL primary database
+- **Mongoose (v8)** — Schema modeling, validation, and strict typing
 - **CORS** — Cross-Origin Resource Sharing middleware
 - **Dotenv** — Environment variable management
 
@@ -55,7 +57,7 @@ smart-waste-management/
 │   │   │   │   ├── BrandMark.jsx        # Custom SVG emblem & typography
 │   │   │   │   ├── Button.jsx           # Primary, secondary, outline, text variants
 │   │   │   │   ├── Container.jsx        # Responsive max-width container
-│   │   │   │   ├── HeroIllustration.jsx # Original vector civic workflow diagram
+│   │   │   │   ├── HeroIllustration.jsx # Illustrative civic workflow diagram
 │   │   │   │   ├── RevealSection.jsx    # IntersectionObserver reveal wrapper
 │   │   │   │   └── SectionLabel.jsx     # Editorial taxonomy kicker
 │   │   │   └── layout/
@@ -88,19 +90,30 @@ smart-waste-management/
 │   ├── package.json                     # Client dependencies
 │   └── vite.config.js                   # Vite configuration
 │
-├── server/                               # Backend Express API
+├── server/                               # Backend Express API & Database
 │   ├── src/
-│   │   ├── config/                      # Database & service configurations
+│   │   ├── config/
+│   │   │   └── db.js                    # MongoDB Atlas connection manager & events
 │   │   ├── controllers/
-│   │   │   └── healthController.js      # Health status controller
+│   │   │   └── healthController.js      # API & Database health endpoints
 │   │   ├── middleware/
 │   │   │   └── errorHandler.js          # 404 & centralized error handlers
-│   │   ├── models/                      # Reserved for Phase 2 data models
+│   │   ├── models/
+│   │   │   ├── User.js                  # Citizen, admin, and collector accounts
+│   │   │   ├── Complaint.js             # Incidents with GeoJSON 2dsphere indexing
+│   │   │   ├── Assignment.js            # Historical & active collector dispatch
+│   │   │   ├── Notification.js          # In-app alerts & updates
+│   │   │   ├── Feedback.js              # 1-5 star ratings with unique compound index
+│   │   │   ├── PointsTransaction.js     # Immutable Green Points ledger
+│   │   │   ├── ActivityLog.js           # Auditable system and security action log
+│   │   │   └── index.js                 # Unified models export hub
 │   │   ├── routes/
 │   │   │   ├── api.routes.js            # Main router hub
-│   │   │   └── health.routes.js         # /api/health route
-│   │   ├── services/                    # Business logic services
-│   │   ├── utils/                       # Shared server helpers
+│   │   │   └── health.routes.js         # /api/health and /api/health/db
+│   │   ├── services/                    # Reserved for Phase 3 business logic
+│   │   ├── utils/
+│   │   │   ├── dbCheck.js               # MongoDB connectivity verification tool
+│   │   │   └── validateSchemas.js       # In-memory Mongoose schema test suite
 │   │   ├── app.js                       # Express app configuration & middleware
 │   │   └── server.js                    # HTTP listener & process handlers
 │   │
@@ -115,26 +128,17 @@ smart-waste-management/
 
 ---
 
-## 4. Design System & Brand Identity
+## 4. Mongoose Database Schema Models (Phase 2)
 
-### Color Tokens
-
-| Token | Hex | Role |
-| :--- | :--- | :--- |
-| `--color-forest` | `#193A2E` | Primary brand authority, headers, dark surfaces |
-| `--color-forest-light`| `#285744` | Hover states, secondary accents |
-| `--color-lime` | `#D9F36A` | High-visibility accent, active badges, primary CTA punch |
-| `--color-paper` | `#F5F4EE` | Editorial backdrop, body background |
-| `--color-white` | `#FFFFFF` | Card surfaces, clean containers |
-| `--color-ink` | `#25312B` | High-contrast readable body text |
-| `--color-muted` | `#77847B` | Secondary captions, metadata, borders |
-| `--color-border` | `#DFE4DC` | Subtle architectural container outlines |
-| `--color-alert` | `#E7895C` | Urgent statuses, warning badges |
-| `--color-sage` | `#9CCDB8` | Supporting nature accents, map indicators |
-
-### Typography
-- **Headings**: `Space Grotesk` (weights: 500, 600, 700)
-- **Body & Interface**: `DM Sans` (weights: 400, 500, 600)
+| Model | Purpose | Key Fields | Indexes |
+| :--- | :--- | :--- | :--- |
+| **User** | User accounts (user, admin, collector) | `name`, `email`, `passwordHash`, `role`, `accountStatus`, `availability`, `serviceAreas` | `email` (unique), `role`, `role + availability` |
+| **Complaint** | Incident reports | `complaintCode`, `user`, `description`, `category`, `priority`, `images` (max 5), `location` (GeoJSON `Point`), `assignedCollector`, `status`, `statusHistory`, `reopenRequest` | `complaintCode` (unique), `user + createdAt`, `status + priority + createdAt`, `assignedCollector + status`, `location` (`2dsphere`) |
+| **Assignment** | Collector task history | `complaint`, `collector`, `assignedBy`, `status`, `completionImages`, `timestamps` | `complaint`, `collector + status`, `assignedBy`, `createdAt` |
+| **Notification** | User notifications | `user`, `title`, `message`, `type`, `relatedComplaint`, `isRead`, `readAt` | `user + createdAt`, `user + isRead` |
+| **Feedback** | Post-resolution ratings | `complaint`, `user`, `rating` (1-5 integer), `comment` | Compound unique `complaint + user` (1 rating per user per ticket) |
+| **PointsTransaction**| Ledger for Green Points | `user`, `complaint`, `points` (non-zero integer), `type`, `reason`, `idempotencyKey` | `user + createdAt`, `idempotencyKey` (unique partial), `complaint + type` (unique partial for `complaint_resolved`) |
+| **ActivityLog** | Auditable security & ops log | `actor` (null for system), `action`, `entityType`, `entityId`, `description`, `metadata` | `actor + createdAt`, `entityType + entityId`, `createdAt` |
 
 ---
 
@@ -142,118 +146,120 @@ smart-waste-management/
 
 - **Node.js**: `v18.0.0` or later (tested on `v24.14.0`)
 - **npm**: `v9.0.0` or later (tested on `11.9.0`)
-- **Shell**: Windows PowerShell, Command Prompt, or bash
+- **MongoDB Atlas Cluster**: A free or paid cluster on [cloud.mongodb.com](https://cloud.mongodb.com)
 
 ---
 
-## 6. Installation
+## 6. Installation & Configuration
 
-Clone or open the project directory in your terminal:
+1. Clone or open the project directory in your terminal:
+   ```powershell
+   cd d:\Desktop\smart-waste-management
+   ```
 
-```powershell
-cd d:\Desktop\smart-waste-management
-```
+2. Install all dependencies across root, server, and client:
+   ```powershell
+   npm run install:all
+   ```
 
-Install all dependencies across root, server, and client in one command:
-
-```powershell
-npm run install:all
-```
-
-Alternatively, install them individually:
-
-```powershell
-# Root dependencies (concurrently)
-npm install
-
-# Server dependencies (Express, CORS, Dotenv, Nodemon)
-cd server
-npm install
-cd ..
-
-# Client dependencies (React, Vite, Lucide React, React Router)
-cd client
-npm install
-cd ..
-```
+3. Configure Environment Variables:
+   - Copy `server/.env.example` to `server/.env`:
+     ```powershell
+     Copy-Item server/.env.example server/.env
+     ```
+   - Open `server/.env` and configure your credentials:
+     ```env
+     PORT=5000
+     NODE_ENV=development
+     CLIENT_URL=http://localhost:5173
+     MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/cleanloop
+     ```
+   *(Note: Ensure your MongoDB Atlas Network Access includes your current IP address)*
 
 ---
 
-## 7. Running the Application
+## 7. Database Verification & Schema Testing
+
+CleanLoop provides dedicated diagnostic and test scripts:
+
+### Test Schema Constraints (In-Memory, Zero DB Writes Required)
+Verifies all 7 Mongoose schemas, enums, required fields, GeoJSON coordinates, and bounds:
+```powershell
+npm run test:schemas
+```
+*(Runs 30 unit validations across all models with full pass reporting)*
+
+### Verify Live MongoDB Atlas Connectivity
+Attempts a connection to your cluster and verifies active readyState:
+```powershell
+npm run db:check
+```
+*(Masks credentials, reports connection host and database name, and closes cleanly)*
+
+---
+
+## 8. Running the Application
 
 ### Option A: Run Both Frontend & Backend Concurrently (Recommended)
 
 From the root directory:
-
 ```powershell
 npm run dev
 ```
-
-This starts:
-- **Express Backend** at `http://localhost:5000`
-- **Vite React Client** at `http://localhost:5173`
 
 ### Option B: Run Individually
 
 **Terminal 1 — Backend:**
 ```powershell
 npm run server:dev
-# Or: cd server && npm run dev
 ```
 
 **Terminal 2 — Frontend:**
 ```powershell
 npm run client:dev
-# Or: cd client && npm run dev
 ```
 
 ---
 
-## 8. Verifying the API Health Endpoint
+## 9. Verifying the API Health Endpoints
 
-With the server running, send a `GET` request to `/api/health`:
-
-### Using PowerShell:
+### 1. General System API Health
 ```powershell
 Invoke-RestMethod -Uri http://localhost:5000/api/health
 ```
-
-### Using cURL:
-```bash
-curl http://localhost:5000/api/health
-```
-
-### Expected Response:
+**Response:**
 ```json
 {
   "success": true,
   "message": "CleanLoop API is running",
-  "timestamp": "2026-11-04T13:00:01.158Z",
+  "timestamp": "2026-11-04T13:31:17.131Z",
   "service": "cleanloop-api",
   "version": "1.0.0"
 }
 ```
 
-You can also run the built-in npm test command from the root directory:
+### 2. Database Health Endpoint
 ```powershell
-npm run test:health
+Invoke-RestMethod -Uri http://localhost:5000/api/health/db
 ```
-
----
-
-## 9. Quality Verification Completed in Phase 1
-
-1. **Dependency Installation**: Root, client, and server dependencies installed with zero errors.
-2. **Production Build**: `npm --prefix client run build` compiles without warnings or errors.
-3. **Backend Health Check**: Confirmed via `GET http://localhost:5000/api/health`.
-4. **404 Route Protection**: Tested and verified fallback handling.
-5. **Brand Identity**: Custom SVG emblem implemented, avoiding generic recycling emojis.
-6. **Responsive Design**: Tested across mobile (<=480px), tablet (<=768px), laptop (<=1024px), and desktop.
-7. **Accessibility**: Visible keyboard focus rings (`:focus-visible`), ARIA attributes on modal navigation, and `prefers-reduced-motion` respected.
+**When connected:** `200 OK`
+```json
+{
+  "success": true,
+  "database": "connected"
+}
+```
+**When disconnected:** `503 Service Unavailable`
+```json
+{
+  "success": false,
+  "database": "disconnected",
+  "message": "Database is not connected"
+}
+```
 
 ---
 
 ## 10. Next Steps
 
-Phase 1 is complete. Ready for **Phase 2 — Database Modeling, Authentication & Role-Based Access Control**.
-
+Phase 2 complete. Standing by for **Phase 3 — Authentication, Role-Based Access Control & User Management**.
