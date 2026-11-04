@@ -11,6 +11,7 @@
     "install:all": "npm install && npm --prefix server install && npm --prefix client install",
     "db:check": "npm --prefix server run db:check",
     "test:schemas": "npm --prefix server run test:schemas",
+    "verify:models": "npm --prefix server run verify:models",
     "test:health": "node -e \"fetch('http://localhost:5000/api/health').then(r=>r.json()).then(d=>console.log(JSON.stringify(d,null,2))).catch(e=>console.error('API health check error:', e.message))\""
   },
   "devDependencies": {

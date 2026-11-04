@@ -80,9 +80,10 @@ const userSchema = new mongoose.Schema(
 );
 
 // Indexes
-// Note: unique index on email is created by `unique: true`
-userSchema.index({ role: 1 });
+// 1. Email uniqueness is guaranteed by `unique: true`
+// 2. Compound index on role & availability covers both role-only and role+availability queries
 userSchema.index({ role: 1, availability: 1 });
 
 export const User = mongoose.model('User', userSchema);
 export default User;
+

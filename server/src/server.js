@@ -1,9 +1,13 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import app from './app.js';
 import { connectDB, closeDB } from './config/db.js';
 
-// Load environment variables
-dotenv.config();
+// Resolve directory and load environment variables from server/.env
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config(); // Fallback to current working directory if set
 
 const PORT = process.env.PORT || 5000;
 const NODE_ENV = process.env.NODE_ENV || 'development';

@@ -44,3 +44,4 @@ feedbackSchema.index({ complaint: 1, user: 1 }, { unique: true });
 
 export const Feedback = mongoose.model('Feedback', feedbackSchema);
 export default Feedback;
+

@@ -1,7 +1,11 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
-// Load environment variables
+// Load environment variables reliably from server/.env
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 dotenv.config();
 
 /**
@@ -63,3 +67,4 @@ const runDbCheck = async () => {
 };
 
 runDbCheck();
+

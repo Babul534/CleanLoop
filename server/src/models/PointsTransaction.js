@@ -75,3 +75,4 @@ pointsTransactionSchema.index(
 
 export const PointsTransaction = mongoose.model('PointsTransaction', pointsTransactionSchema);
 export default PointsTransaction;
+

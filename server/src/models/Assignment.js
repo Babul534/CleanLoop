@@ -98,3 +98,4 @@ assignmentSchema.index({ createdAt: -1 });
 
 export const Assignment = mongoose.model('Assignment', assignmentSchema);
 export default Assignment;
+

@@ -81,3 +81,4 @@ export const closeDB = async () => {
 };
 
 export default connectDB;
+
