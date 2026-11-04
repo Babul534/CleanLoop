@@ -77,9 +77,17 @@ export const BrandMark = ({
     </div>
   );
 
+  const handleClick = (e) => {
+    if (to === '/' && window.location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.history.pushState(null, '', '/');
+    }
+  };
+
   if (to) {
     return (
-      <Link to={to} className="brandmark-link" aria-label="CleanLoop Home">
+      <Link to={to} className="brandmark-link" onClick={handleClick} aria-label="CleanLoop Home">
         {content}
       </Link>
     );
@@ -89,3 +97,4 @@ export const BrandMark = ({
 };
 
 export default BrandMark;
+

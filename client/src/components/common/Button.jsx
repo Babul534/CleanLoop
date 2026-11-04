@@ -31,7 +31,7 @@ export const Button = ({
           <Icon size={size === 'sm' ? 16 : size === 'lg' ? 20 : 18} />
         </span>
       )}
-      <span className="btn-text">{children}</span>
+      <span className="btn-label">{children}</span>
       {Icon && iconPosition === 'right' && (
         <span className="btn-icon btn-icon-right" aria-hidden="true">
           <Icon size={size === 'sm' ? 16 : size === 'lg' ? 20 : 18} />
@@ -71,3 +71,4 @@ export const Button = ({
 };
 
 export default Button;
+

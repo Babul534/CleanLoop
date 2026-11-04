@@ -31,3 +31,4 @@ export const RevealSection = ({
 };
 
 export default RevealSection;
+

@@ -265,8 +265,19 @@
   outline-offset: 3px;
 }
 
-/* Text: Clean minimal */
-.btn-text {
+.btn-label {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  white-space: nowrap;
+}
+
+/* Text Variant: Clean minimal */
+.btn.btn-text {
   background-color: transparent;
   color: var(--color-forest);
   padding-left: var(--space-2);
@@ -274,7 +285,7 @@
   border-color: transparent;
 }
 
-.btn-text:hover:not(:disabled) {
+.btn.btn-text:hover:not(:disabled) {
   color: var(--color-forest-light);
   background-color: rgba(25, 58, 46, 0.05);
 }
@@ -677,3 +688,4 @@
     gap: var(--space-3);
   }
 }
+

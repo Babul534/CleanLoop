@@ -22,3 +22,4 @@ export const useScrollHeader = (threshold = 24) => {
 
   return isScrolled;
 };
+

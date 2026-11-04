@@ -49,3 +49,4 @@ export const useScrollReveal = ({
 
   return [elementRef, isVisible];
 };
+

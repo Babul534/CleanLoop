@@ -83,3 +83,10 @@
   --container-padding: 1.5rem;
   --header-height: 76px;
 }
+
+@media (max-width: 480px) {
+  :root {
+    --container-padding: 1rem;
+  }
+}
+

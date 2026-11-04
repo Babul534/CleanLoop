@@ -55,13 +55,25 @@ export const Navbar = () => {
   const handleNavClick = (e, href) => {
     if (href.startsWith('/#')) {
       const targetId = href.replace('/#', '');
-      const targetEl = document.getElementById(targetId);
-      if (targetEl) {
+      
+      if (location.pathname === '/') {
         e.preventDefault();
         setMobileMenuOpen(false);
-        targetEl.scrollIntoView({ behavior: 'smooth' });
-        // Update URL hash without reload
-        window.history.pushState(null, '', `#${targetId}`);
+
+        if (targetId === 'hero' || targetId === 'top') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          window.history.pushState(null, '', window.location.pathname);
+          return;
+        }
+
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+          window.history.pushState(null, '', `#${targetId}`);
+        }
+      } else {
+        // Navigating from a sub-page back to home with hash
+        setMobileMenuOpen(false);
       }
     }
   };
@@ -171,3 +183,4 @@ export const Navbar = () => {
 };
 
 export default Navbar;
+

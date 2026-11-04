@@ -37,3 +37,4 @@ export default {
   checkApiHealth,
   API_BASE_URL
 };
+

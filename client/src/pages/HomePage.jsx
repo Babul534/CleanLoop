@@ -27,26 +27,25 @@ import HeroIllustration from '../components/common/HeroIllustration';
 import { checkApiHealth } from '../services/api';
 
 export const HomePage = () => {
-  const [apiStatus, setApiStatus] = useState({ checked: false, isOnline: false, message: '' });
-
   useEffect(() => {
-    // Probe backend health status
-    let isMounted = true;
-    checkApiHealth().then((res) => {
-      if (isMounted) {
-        setApiStatus({
-          checked: true,
-          isOnline: res.success,
-          message: res.message || 'Connecting...'
-        });
-      }
-    });
-    return () => {
-      isMounted = false;
-    };
+    // If arriving with a hash, smoothly scroll to target
+    if (window.location.hash) {
+      const targetId = window.location.hash.replace('#', '');
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
   }, []);
 
   const scrollTo = (id) => {
+    if (id === 'hero' || id === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.history.pushState(null, '', window.location.pathname);
+      return;
+    }
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
@@ -67,18 +66,14 @@ export const HomePage = () => {
               {/* Left Column: Editorial Headline & Actions */}
               <div className="hero-content">
                 <div className="hero-kicker-row">
-                  <SectionLabel variant="forest" number="CIVIC PROTOCOL">
+                  <SectionLabel variant="forest" number="CIVIC CONCEPT">
                     Smart Sanitation Network
                   </SectionLabel>
                   
-                  {apiStatus.checked && (
-                    <div className="api-health-pill" title={apiStatus.message}>
-                      <span className={`status-indicator ${apiStatus.isOnline ? 'is-live' : 'is-offline'}`} />
-                      <span className="status-label">
-                        {apiStatus.isOnline ? 'Engine Online' : 'Local Core Standby'}
-                      </span>
-                    </div>
-                  )}
+                  <div className="illustrative-workflow-tag">
+                    <span className="tag-dot" aria-hidden="true" />
+                    <span>Illustrative workflow</span>
+                  </div>
                 </div>
 
                 <h1 className="hero-headline">
@@ -96,6 +91,8 @@ export const HomePage = () => {
                     size="lg"
                     onClick={() => scrollTo('how-it-works')}
                     icon={ArrowRight}
+                    aria-label="See how it works →"
+                    className="hero-primary-cta"
                   >
                     See how it works
                   </Button>
@@ -506,3 +503,4 @@ export const HomePage = () => {
 };
 
 export default HomePage;
+
