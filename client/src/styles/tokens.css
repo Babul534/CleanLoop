@@ -1,0 +1,85 @@
+/**
+ * CleanLoop Design System Tokens
+ * Civic-tech editorial design language
+ */
+
+:root {
+  /* Brand Core Palette */
+  --color-forest: #193A2E;
+  --color-forest-light: #285744;
+  --color-lime: #D9F36A;
+  --color-paper: #F5F4EE;
+  --color-white: #FFFFFF;
+  --color-ink: #25312B;
+  --color-muted: #77847B;
+  --color-border: #DFE4DC;
+  --color-alert: #E7895C;
+  --color-sage: #9CCDB8;
+
+  /* Nuanced Tonal Derivatives */
+  --color-forest-dark: #10261E;
+  --color-forest-alpha-08: rgba(25, 58, 46, 0.08);
+  --color-forest-alpha-15: rgba(25, 58, 46, 0.15);
+  --color-paper-subtle: #EFECE3;
+  --color-paper-card: #FAF9F5;
+  --color-border-subtle: #EBEFE8;
+  --color-lime-alpha-20: rgba(217, 243, 106, 0.2);
+  --color-lime-alpha-30: rgba(217, 243, 106, 0.3);
+  --color-sage-subtle: #EDF7F2;
+  --color-alert-subtle: #FDF1EA;
+
+  /* Typography */
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Type Scale */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
+  --text-display: 3.75rem;/* 60px */
+
+  /* Spacing Scale */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+  --space-32: 8rem;     /* 128px */
+
+  /* Architectural Radii (Disciplined, non-pill) */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-pill: 9999px;
+
+  /* Architectural Shadows */
+  --shadow-subtle: 0 1px 3px rgba(25, 58, 46, 0.05);
+  --shadow-card: 0 4px 12px rgba(25, 58, 46, 0.04), 0 1px 2px rgba(25, 58, 46, 0.02);
+  --shadow-elevated: 0 16px 36px rgba(25, 58, 46, 0.08), 0 2px 6px rgba(25, 58, 46, 0.03);
+  --shadow-focus: 0 0 0 3px rgba(217, 243, 106, 0.6);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout Constraints */
+  --container-max: 1240px;
+  --container-padding: 1.5rem;
+  --header-height: 76px;
+}

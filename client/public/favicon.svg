@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <rect width="48" height="48" rx="12" fill="#193A2E"/>
+  <!-- Precision infinity-loop / leaf hybrid mark -->
+  <path d="M14 24C14 19.5817 17.5817 16 22 16C26.4183 16 29 20 31 24C33 28 35.5817 32 40 32C44.4183 32 48 28.4183 48 24" stroke="#D9F36A" stroke-width="3" stroke-linecap="round" opacity="0"/>
+  <!-- Continuous dual-node closed loop geometry -->
+  <path d="M16 24C16 19.5817 19.5817 16 24 16C28.4183 16 32 19.5817 32 24C32 28.4183 28.4183 32 24 32C19.5817 32 16 28.4183 16 24Z" stroke="#285744" stroke-width="2.5"/>
+  <path d="M12 28C10 24 11 19 15 16C19 13 25 15 28 20L36 30C38 33 42 32 43 29" stroke="#D9F36A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="15" cy="18" r="3" fill="#D9F36A"/>
+  <circle cx="33" cy="30" r="3" fill="#9CCDB8"/>
+  <circle cx="24" cy="24" r="2" fill="#FFFFFF"/>
+</svg>

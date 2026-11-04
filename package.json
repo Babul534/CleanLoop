@@ -1,0 +1,26 @@
+{
+  "name": "cleanloop-smart-waste-management",
+  "version": "1.0.0",
+  "description": "CleanLoop — Smart Waste Management System. A modern full-stack civic-tech platform.",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"cyan,magenta\" \"npm run server:dev\" \"npm run client:dev\"",
+    "client:dev": "npm --prefix client run dev",
+    "server:dev": "npm --prefix server run dev",
+    "client:build": "npm --prefix client run build",
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install",
+    "test:health": "node -e \"fetch('http://localhost:5000/api/health').then(r=>r.json()).then(d=>console.log(JSON.stringify(d,null,2))).catch(e=>console.error('API health check error:', e.message))\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "keywords": [
+    "smart-waste-management",
+    "civic-tech",
+    "cleanloop",
+    "react",
+    "express"
+  ],
+  "author": "CleanLoop Engineering Team",
+  "license": "ISC"
+}
