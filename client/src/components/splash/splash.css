@@ -1,0 +1,473 @@
+/**
+ * CleanLoop Cinematic Splash Experience Styles
+ * Warm ivory, deep slate, soft sage, muted stone, and restrained lime palette.
+ */
+
+.cinematic-splash-viewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  background-color: #F4F1EA;
+  background: radial-gradient(circle at 50% 46%, #FFFFFF 0%, #F4F1EA 58%, #EBE5DC 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+  transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 700ms cubic-bezier(0.16, 1, 0.3, 1),
+              filter 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cinematic-splash-viewport.is-exiting {
+  opacity: 0;
+  transform: scale(1.04);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+/* -----------------------------------------------------------------------------
+ * Ambient Lighting & Diffused Core
+ * ----------------------------------------------------------------------------- */
+.splash-ambient-plane {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 30% 25%, rgba(198, 217, 107, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 75% 70%, rgba(169, 185, 172, 0.18) 0%, transparent 50%);
+  pointer-events: none;
+  animation: ambientLightingShift 8s ease-in-out infinite alternate;
+}
+
+.splash-glow-core {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(198, 217, 107, 0.15) 0%, rgba(169, 185, 172, 0.1) 45%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+  transform: scale(0.9);
+  transition: transform 1400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phase-logo .splash-glow-core,
+.phase-brand .splash-glow-core {
+  transform: scale(1.15);
+}
+
+/* -----------------------------------------------------------------------------
+ * Floating Ambient Organic Particles
+ * ----------------------------------------------------------------------------- */
+.splash-particles-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.splash-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatDrift linear infinite;
+  filter: blur(0.5px);
+}
+
+@keyframes floatDrift {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.85);
+  }
+  50% {
+    transform: translateY(-28px) translateX(12px) scale(1.05);
+  }
+  100% {
+    transform: translateY(-60px) translateX(-8px) scale(0.85);
+  }
+}
+
+@keyframes ambientLightingShift {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+ * Controls / Skip Intro
+ * ----------------------------------------------------------------------------- */
+.splash-controls {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10;
+  animation: fadeInControls 800ms ease-out 400ms backwards;
+}
+
+.splash-skip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(38, 60, 56, 0.05);
+  border: 1px solid rgba(38, 60, 56, 0.14);
+  color: #263C38;
+  font-family: var(--font-body, -apple-system, sans-serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.45rem 0.95rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.splash-skip-btn:hover {
+  background-color: #263C38;
+  border-color: #263C38;
+  color: #F4F1EA;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(38, 60, 56, 0.12);
+}
+
+.splash-skip-btn:focus-visible {
+  outline: 2px solid #C6D96B;
+  outline-offset: 2px;
+}
+
+.splash-skip-btn .skip-arrow {
+  transition: transform 200ms ease;
+}
+
+.splash-skip-btn:hover .skip-arrow {
+  transform: translateX(2px);
+}
+
+@keyframes fadeInControls {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+ * Center Stage Visual Presentation
+ * ----------------------------------------------------------------------------- */
+.splash-center-stage {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 520px;
+  padding: 2rem;
+}
+
+/* -----------------------------------------------------------------------------
+ * Emblem Presentation & Animations
+ * ----------------------------------------------------------------------------- */
+.splash-emblem-wrap {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.emblem-halo-pulse {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 38px;
+  background: radial-gradient(circle, rgba(198, 217, 107, 0.3) 0%, rgba(169, 185, 172, 0.15) 50%, transparent 75%);
+  filter: blur(16px);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 1200ms ease, transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phase-logo .emblem-halo-pulse,
+.phase-brand .emblem-halo-pulse,
+.phase-transition .emblem-halo-pulse {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.splash-emblem-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 14px 28px rgba(38, 60, 56, 0.12));
+}
+
+/* Scene 1 -> 2: Base shield smoothly scales & fades in */
+.emblem-shield-base {
+  transform-origin: center;
+  opacity: 0;
+  transform: scale(0.85) rotate(-10deg);
+  transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phase-logo .emblem-shield-base,
+.phase-brand .emblem-shield-base,
+.phase-transition .emblem-shield-base {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+/* Inner orbit circle */
+.emblem-inner-orbit {
+  opacity: 0;
+  transition: opacity 1000ms ease 200ms;
+}
+
+.phase-logo .emblem-inner-orbit,
+.phase-brand .emblem-inner-orbit,
+.phase-transition .emblem-inner-orbit {
+  opacity: 0.6;
+}
+
+/* Continuous closed loop stroke drawing */
+.emblem-loop-path {
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
+  transition: stroke-dashoffset 1200ms cubic-bezier(0.16, 1, 0.3, 1) 300ms;
+}
+
+.phase-logo .emblem-loop-path,
+.phase-brand .emblem-loop-path,
+.phase-transition .emblem-loop-path {
+  stroke-dashoffset: 0;
+}
+
+/* Leaf unfurling shape */
+.emblem-leaf-shape {
+  transform-origin: 60px 34px;
+  opacity: 0;
+  transform: scale(0.2) rotate(-35deg);
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1) 600ms,
+              transform 900ms cubic-bezier(0.16, 1, 0.3, 1) 600ms;
+}
+
+.phase-logo .emblem-leaf-shape,
+.phase-brand .emblem-leaf-shape,
+.phase-transition .emblem-leaf-shape {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+/* Center core dot */
+.emblem-core-dot {
+  opacity: 0;
+  transform-origin: center;
+  transform: scale(0);
+  transition: opacity 600ms ease 800ms, transform 600ms cubic-bezier(0.16, 1, 0.3, 1) 800ms;
+}
+
+.phase-logo .emblem-core-dot,
+.phase-brand .emblem-core-dot,
+.phase-transition .emblem-core-dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Satellite node pulse */
+.emblem-satellite-node {
+  opacity: 0;
+  transform-origin: 86px 60px;
+  transform: scale(0);
+  transition: opacity 500ms ease 900ms, transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 900ms;
+}
+
+.phase-logo .emblem-satellite-node,
+.phase-brand .emblem-satellite-node,
+.phase-transition .emblem-satellite-node {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* -----------------------------------------------------------------------------
+ * Scene 3: Brand Reveal & Typography
+ * ----------------------------------------------------------------------------- */
+.splash-brand-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-wordmark-row {
+  overflow: hidden;
+  padding: 0.25rem 0.5rem;
+}
+
+.splash-title {
+  margin: 0;
+  font-family: var(--font-heading, 'Space Grotesk', -apple-system, sans-serif);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #263C38;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
+              letter-spacing 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phase-brand .splash-title,
+.phase-transition .splash-title {
+  opacity: 1;
+  transform: translateY(0);
+  letter-spacing: 0.22em;
+}
+
+.title-letter {
+  display: inline-block;
+  transition: color 400ms ease;
+}
+
+.title-accent {
+  color: #344F4A;
+}
+
+/* Expanding Hairline Divider */
+.splash-divider-line {
+  width: 0;
+  height: 1px;
+  background-color: #D9D2C5;
+  margin: 0.85rem 0;
+  transition: width 900ms cubic-bezier(0.16, 1, 0.3, 1) 200ms;
+}
+
+.phase-brand .splash-divider-line,
+.phase-transition .splash-divider-line {
+  width: 72px;
+}
+
+/* Tagline Reveal */
+.splash-tagline {
+  margin: 0;
+  font-family: var(--font-body, 'DM Sans', -apple-system, sans-serif);
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #4A5D57;
+  letter-spacing: 0.03em;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1) 350ms,
+              transform 800ms cubic-bezier(0.16, 1, 0.3, 1) 350ms;
+}
+
+.phase-brand .splash-tagline,
+.phase-transition .splash-tagline {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -----------------------------------------------------------------------------
+ * Bottom Footer Indicator
+ * ----------------------------------------------------------------------------- */
+.splash-footer-bar {
+  position: absolute;
+  bottom: 2rem;
+  z-index: 5;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 800ms ease 600ms, transform 800ms ease 600ms;
+}
+
+.phase-brand .splash-footer-bar,
+.phase-transition .splash-footer-bar {
+  opacity: 0.7;
+  transform: translateY(0);
+}
+
+.splash-micro-label {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  color: #7B8C84;
+  text-transform: uppercase;
+}
+
+/* -----------------------------------------------------------------------------
+ * Responsive Refinements
+ * ----------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .splash-controls {
+    top: 1.25rem;
+    right: 1.25rem;
+  }
+  .splash-emblem-wrap {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 1.5rem;
+  }
+  .splash-title {
+    font-size: 1.45rem;
+    letter-spacing: 0.28em;
+  }
+  .phase-brand .splash-title,
+  .phase-transition .splash-title {
+    letter-spacing: 0.16em;
+  }
+  .splash-tagline {
+    font-size: 0.85rem;
+  }
+  .splash-footer-bar {
+    bottom: 1.25rem;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+ * Accessibility: Respect Prefers Reduced Motion
+ * ----------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-splash-viewport {
+    transition: none !important;
+  }
+  .splash-particle,
+  .splash-ambient-plane {
+    animation: none !important;
+  }
+  .emblem-shield-base,
+  .emblem-loop-path,
+  .emblem-leaf-shape,
+  .emblem-core-dot,
+  .emblem-satellite-node,
+  .splash-title,
+  .splash-divider-line,
+  .splash-tagline {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+    width: 72px !important;
+  }
+}
+

@@ -10,13 +10,34 @@
     "dev": "nodemon src/server.js",
     "db:check": "node src/utils/dbCheck.js",
     "test:schemas": "node src/utils/validateSchemas.js",
-    "verify:models": "node src/utils/verifyPhase2.js"
+    "verify:models": "node src/utils/verifyPhase2.js",
+    "verify:auth": "node src/utils/testPhase3Auth.js",
+    "verify:complaints": "node src/utils/testPhase4Complaints.js",
+    "verify:tracking": "node src/utils/testPhase5Tracking.js",
+    "verify:admin": "node src/utils/testPhase6Admin.js",
+    "verify:collector": "node src/utils/testPhase7Collector.js",
+    "verify:map": "node src/utils/testPhase8MapAnalytics.js",
+    "verify:rewards": "node src/utils/testPhase9Rewards.js",
+    "audit:rewards": "node src/utils/testPhase9IndependentAudit.js",
+    "test:e2e": "node src/utils/testEndToEndWorkflow.js",
+    "verify:verification": "node src/utils/testVerificationAudit.js",
+    "test:before-after": "node src/utils/testBeforeAfterComparison.js",
+    "test:splash-home": "node src/utils/testCinematicSplashAndHomepage.js",
+    "verify:deployment": "node src/utils/testDeploymentConfig.js",
+    "admin": "node src/scripts/createAdmin.js"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.11.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongoose": "^9.11.4"
+    "express-rate-limit": "^8.7.3",
+    "express-validator": "^7.3.2",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.11.4",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

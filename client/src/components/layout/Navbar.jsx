@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { useLocation, Link } from 'react-router-dom';
+import { Menu, X, ArrowUpRight, LogIn, LayoutDashboard, LogOut } from 'lucide-react';
 import BrandMark from '../common/BrandMark';
 import Button from '../common/Button';
 import Container from '../common/Container';
 import { useScrollHeader } from '../../hooks/useScrollHeader';
+import { useAuth } from '../../context/AuthContext';
 
 /**
  * Navbar Component
  * Responsive civic navigation header with scroll-reactive elevation,
- * mobile drawer toggle, and keyboard accessibility.
+ * mobile drawer toggle, keyboard accessibility, and dynamic authentication actions.
  */
 export const Navbar = () => {
   const isScrolled = useScrollHeader(20);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, isAuthenticated, logout } = useAuth();
+  const dashboardRoute = user?.role === 'user' ? '/dashboard' : '/workspace';
+  const dashboardLabel = user?.role === 'user' ? 'Dashboard' : 'Workspace';
 
   // Close mobile menu on route changes
   useEffect(() => {
@@ -102,18 +106,49 @@ export const Navbar = () => {
           </ul>
         </nav>
 
-        {/* Right Action */}
+        {/* Right Actions: Authenticated vs Unauthenticated */}
         <div className="site-header-actions">
-          <Button
-            variant="secondary"
-            size="sm"
-            href="#how-it-works"
-            onClick={(e) => handleNavClick(e, '/#how-it-works')}
-            icon={ArrowUpRight}
-            className="header-cta-btn"
-          >
-            Explore the platform
-          </Button>
+          {isAuthenticated ? (
+            <>
+              <Button
+                variant="secondary"
+                size="sm"
+                to={dashboardRoute}
+                icon={LayoutDashboard}
+                className="header-cta-btn"
+              >
+                {dashboardLabel}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={logout}
+                icon={LogOut}
+                aria-label="Sign out of CleanLoop"
+              >
+                Sign Out
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="nav-link"
+                style={{ fontWeight: 600, padding: '0.4rem 0.6rem' }}
+              >
+                Sign In
+              </Link>
+              <Button
+                variant="secondary"
+                size="sm"
+                to="/register"
+                icon={ArrowUpRight}
+                className="header-cta-btn"
+              >
+                Register
+              </Button>
+            </>
+          )}
 
           {/* Mobile Menu Toggle Button */}
           <button
@@ -162,16 +197,55 @@ export const Navbar = () => {
           </nav>
 
           <div className="mobile-drawer-footer">
-            <Button
-              variant="secondary"
-              size="md"
-              href="#how-it-works"
-              onClick={(e) => handleNavClick(e, '/#how-it-works')}
-              icon={ArrowUpRight}
-              className="mobile-cta-btn"
-            >
-              Explore the platform
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <Button
+                  variant="secondary"
+                  size="md"
+                  to={dashboardRoute}
+                  icon={LayoutDashboard}
+                  className="mobile-cta-btn"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {dashboardLabel}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="md"
+                  onClick={() => {
+                    logout();
+                    setMobileMenuOpen(false);
+                  }}
+                  icon={LogOut}
+                  style={{ marginTop: '0.5rem', width: '100%' }}
+                >
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="secondary"
+                  size="md"
+                  to="/register"
+                  icon={ArrowUpRight}
+                  className="mobile-cta-btn"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Register Citizen Account
+                </Button>
+                <Button
+                  variant="outline"
+                  size="md"
+                  to="/login"
+                  icon={LogIn}
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{ marginTop: '0.5rem', width: '100%' }}
+                >
+                  Sign In
+                </Button>
+              </>
+            )}
             <p className="mobile-drawer-tagline">
               A cleaner city. One report at a time.
             </p>
@@ -183,4 +257,3 @@ export const Navbar = () => {
 };
 
 export default Navbar;
-

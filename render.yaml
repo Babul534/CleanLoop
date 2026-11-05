@@ -1,0 +1,37 @@
+# CleanLoop Render Blueprint Specification (Free Tier)
+# Deploy via Render Dashboard -> Blueprints -> Connect Repository
+
+services:
+  - type: web
+    name: cleanloop-api
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_URL
+        sync: false
+        # Example: https://cleanloop.vercel.app
+      - key: ALLOWED_ORIGINS
+        sync: false
+        # Example: https://cleanloop.vercel.app,http://localhost:5173
+      - key: MONGODB_URI
+        sync: false
+        # Example: mongodb+srv://<user>:<password>@<cluster>.mongodb.net/cleanloop?retryWrites=true&w=majority
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 24h
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+

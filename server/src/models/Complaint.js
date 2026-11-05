@@ -37,6 +37,20 @@ const statusHistorySchema = new mongoose.Schema(
         'reopen_requested'
       ]
     },
+    previousStatus: {
+      type: String,
+      enum: [
+        'pending',
+        'under_review',
+        'assigned',
+        'in_progress',
+        'awaiting_verification',
+        'resolved',
+        'rejected',
+        'reopen_requested'
+      ],
+      default: null
+    },
     changedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',

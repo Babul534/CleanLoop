@@ -1,0 +1,453 @@
+/* CleanLoop Phase 9: Green Points, Rewards & Leaderboard Design System */
+
+.rewards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* 1. Hero Points Balance Banner */
+.points-hero-card {
+  background: linear-gradient(135deg, #0d3824 0%, #17543A 60%, #1e6b4a 100%);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  padding: 2.25rem 2rem;
+  box-shadow: 0 10px 25px -5px rgba(23, 84, 58, 0.25), 0 8px 10px -6px rgba(23, 84, 58, 0.2);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.points-hero-card::after {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(217, 243, 106, 0.18) 0%, rgba(217, 243, 106, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.points-hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.points-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.points-hero-badge-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(217, 243, 106, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #D9F36A;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.points-hero-balance-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.points-hero-label {
+  font-size: 0.825rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 4px;
+}
+
+.points-hero-number {
+  font-family: var(--font-heading);
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #ffffff;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.points-hero-unit {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #D9F36A;
+}
+
+.points-hero-stats-row {
+  display: flex;
+  gap: 1.75rem;
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  flex-wrap: wrap;
+}
+
+.points-hero-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.points-hero-stat-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.points-hero-stat-val {
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  color: #ffffff;
+}
+
+/* Next Achievement Progress Strip */
+.next-achievement-strip {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.next-achievement-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.next-achievement-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(23, 84, 58, 0.08);
+  color: var(--color-forest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-track {
+  width: 100%;
+  max-width: 260px;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-forest) 0%, #16a34a 100%);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+/* 2. Achievement Badges Grid */
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.badge-card {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.badge-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.badge-card.is-unlocked {
+  border-color: rgba(22, 163, 74, 0.35);
+  background: linear-gradient(180deg, #ffffff 0%, rgba(22, 163, 74, 0.02) 100%);
+}
+
+.badge-card.is-locked {
+  opacity: 0.78;
+  background: #fbfbf9;
+}
+
+.badge-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.badge-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+}
+
+.badge-card.is-unlocked .badge-icon-box {
+  background: rgba(22, 163, 74, 0.12);
+  color: #16a34a;
+  border: 1px solid rgba(22, 163, 74, 0.2);
+}
+
+.badge-card.is-locked .badge-icon-box {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-muted);
+}
+
+.badge-pill-status {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 9px;
+  border-radius: 999px;
+}
+
+.badge-pill-status.unlocked {
+  background: rgba(22, 163, 74, 0.12);
+  color: #15803d;
+}
+
+.badge-pill-status.locked {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--color-muted);
+}
+
+.badge-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-forest);
+  margin: 0 0 4px 0;
+}
+
+.badge-desc {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  line-height: 1.45;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.badge-footer-progress {
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.875rem;
+  margin-top: auto;
+}
+
+.badge-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  margin-bottom: 6px;
+}
+
+/* 3. Civic Leaderboard Styles */
+.leaderboard-podium {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+  align-items: flex-end;
+}
+
+@media (max-width: 640px) {
+  .leaderboard-podium {
+    grid-template-columns: 1fr;
+  }
+}
+
+.podium-card {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.podium-card.rank-1 {
+  border-color: #eab308;
+  background: linear-gradient(180deg, rgba(234, 179, 8, 0.06) 0%, var(--color-paper) 60%);
+  transform: translateY(-8px);
+  box-shadow: 0 10px 24px rgba(234, 179, 8, 0.15);
+}
+
+.podium-card.rank-2 {
+  border-color: #94a3b8;
+  background: linear-gradient(180deg, rgba(148, 163, 184, 0.06) 0%, var(--color-paper) 60%);
+}
+
+.podium-card.rank-3 {
+  border-color: #b45309;
+  background: linear-gradient(180deg, rgba(180, 83, 9, 0.05) 0%, var(--color-paper) 60%);
+}
+
+.podium-medal-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.podium-card.rank-1 .podium-medal-badge {
+  background: #fef08a;
+  color: #854d0e;
+  border: 2px solid #eab308;
+}
+
+.podium-card.rank-2 .podium-medal-badge {
+  background: #f1f5f9;
+  color: #334155;
+  border: 2px solid #94a3b8;
+}
+
+.podium-card.rank-3 .podium-medal-badge {
+  background: #ffedd5;
+  color: #9a3412;
+  border: 2px solid #ea580c;
+}
+
+.podium-name {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-forest);
+  margin: 0 0 4px 0;
+}
+
+.podium-badge-label {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  margin-bottom: 10px;
+}
+
+.podium-points {
+  font-size: 1.35rem;
+  font-weight: 800;
+  font-family: var(--font-heading);
+  color: var(--color-forest);
+}
+
+/* Leaderboard Table */
+.leaderboard-table-card {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th {
+  padding: 12px 18px;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.leaderboard-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+.leaderboard-table tr:hover {
+  background-color: rgba(0, 0, 0, 0.015);
+}
+
+.leaderboard-table tr.is-current-user {
+  background-color: rgba(23, 84, 58, 0.05);
+  font-weight: 600;
+}
+
+.leaderboard-rank-col {
+  width: 60px;
+  font-weight: 800;
+  color: var(--color-muted);
+}
+
+/* 4. Transaction Ledger Styles */
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.transaction-item {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 1.15rem 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tx-points-pill {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.1);
+  padding: 6px 14px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+

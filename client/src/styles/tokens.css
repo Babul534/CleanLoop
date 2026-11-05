@@ -4,17 +4,24 @@
  */
 
 :root {
-  /* Brand Core Palette */
-  --color-forest: #193A2E;
-  --color-forest-light: #285744;
-  --color-lime: #D9F36A;
-  --color-paper: #F5F4EE;
+  /* Brand Core Palette - Premium Warm Identity */
+  --color-warm-ivory: #F4F1EA;
+  --color-deep-slate: #263C38;
+  --color-soft-sage: #A9B9AC;
+  --color-muted-stone: #D9D2C5;
+  --color-light-neutral: #FFFFFF;
+  --color-restrained-lime: #C6D96B;
+
+  --color-forest: #263C38;
+  --color-forest-light: #344F4A;
+  --color-lime: #C6D96B;
+  --color-paper: #F4F1EA;
   --color-white: #FFFFFF;
-  --color-ink: #25312B;
-  --color-muted: #77847B;
-  --color-border: #DFE4DC;
-  --color-alert: #E7895C;
-  --color-sage: #9CCDB8;
+  --color-ink: #263C38;
+  --color-muted: #6B7B73;
+  --color-border: #D9D2C5;
+  --color-alert: #D97746;
+  --color-sage: #A9B9AC;
 
   /* Nuanced Tonal Derivatives */
   --color-forest-dark: #10261E;

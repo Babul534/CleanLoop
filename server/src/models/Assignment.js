@@ -74,6 +74,10 @@ const assignmentSchema = new mongoose.Schema(
       type: Date,
       default: null
     },
+    beforeImages: {
+      type: [completionImageSchema],
+      default: []
+    },
     completionImages: {
       type: [completionImageSchema],
       default: []

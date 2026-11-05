@@ -7,11 +7,16 @@
     "dev": "concurrently -n \"SERVER,CLIENT\" -c \"cyan,magenta\" \"npm run server:dev\" \"npm run client:dev\"",
     "client:dev": "npm --prefix client run dev",
     "server:dev": "npm --prefix server run dev",
+    "build": "npm --prefix client run build",
+    "start": "npm --prefix server start",
     "client:build": "npm --prefix client run build",
     "install:all": "npm install && npm --prefix server install && npm --prefix client install",
     "db:check": "npm --prefix server run db:check",
     "test:schemas": "npm --prefix server run test:schemas",
     "verify:models": "npm --prefix server run verify:models",
+    "verify:auth": "npm --prefix server run verify:auth",
+    "verify:complaints": "npm --prefix server run verify:complaints",
+    "admin": "npm --prefix server run admin",
     "test:health": "node -e \"fetch('http://localhost:5000/api/health').then(r=>r.json()).then(d=>console.log(JSON.stringify(d,null,2))).catch(e=>console.error('API health check error:', e.message))\""
   },
   "devDependencies": {

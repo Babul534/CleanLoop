@@ -7,7 +7,7 @@ import SectionLabel from '../common/SectionLabel';
  * Footer Component
  * Architectural, authoritative civic-tech footer adhering to CleanLoop design system.
  */
-export const Footer = () => {
+export const Footer = ({ onReplayIntro }) => {
   const currentYear = new Date().getFullYear();
 
   const handleScrollTo = (e, id) => {
@@ -31,8 +31,18 @@ export const Footer = () => {
               directly with municipal waste sanitation departments for faster, verifiable public cleanups.
             </p>
             <div className="footer-tagline-badge">
-              &ldquo;A cleaner city. One report at a time.&rdquo;
+              &ldquo;Small Actions. Cleaner Tomorrow.&rdquo;
             </div>
+            {onReplayIntro && (
+              <button
+                type="button"
+                onClick={onReplayIntro}
+                className="footer-replay-intro-btn"
+                title="Watch the opening brand experience"
+              >
+                <span>&#9654; Replay Opening Experience</span>
+              </button>
+            )}
           </div>
 
           {/* Platform Navigation */}
